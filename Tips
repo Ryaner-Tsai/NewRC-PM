@@ -1,0 +1,29 @@
+一、project start:
+    1.start a project[terminal]
+	    django-admin startproject projectname
+    2.git
+        2.1 gitignore[project folder]
+        2.2 git connect[pycharm interface]
+		step1.[tool line]VCS/import version control/create git repository
+		step2.[folder line]right click target folder→git→commit directory 
+        2.3 git-hub connect
+		step1.setting a new repository in git hub website(Note:setting with 
+    
+    3.runserver
+	    python manage.py runserver
+    4.apps
+        4.1 admin-user
+        4.2 models
+    
+    5.database
+    6.static and media
+        6.1 [DefaultApps/settings.py]
+            STATICFILES_DIRS=[
+            os.path.join(BASE_DIR, 'producthunt/static/')
+            ]
+            STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+            STATIC_URL = '/static/'
+            MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+            MEDIA_URL = '/media/'
+        6.2 [DefaultApps/urls.py]
+            +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
