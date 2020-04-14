@@ -1,22 +1,63 @@
 一、project start:
-    1.start a project[terminal]
-	    django-admin startproject projectname
+    1.start a project
+	    [terminal]django-admin startproject projectname
+		[→]       project folder(name as projectname)→default apps(name as projectname)
+			                                         →manage.py
+		
     2.git
         2.1 gitignore[project folder]
+		    step1. copy a .gitignore file 
+		    step2. paste to project folder 
         2.2 git connect[pycharm interface]
-		step1.[tool line]VCS/import version control/create git repository
-		step2.[folder line]right click target folder→git→commit directory 
+		    step1. [tool line] VCS/import version control/create git repository
+		    step2. [folder line] right click target folder→git→commit directory 
         2.3 git-hub connect
-		step1.setting a new repository in git hub website(Note:setting with 
+		    step1. [git-hub website] setting a new repository(without initialize)
+		    step2. [git-hub website] copy URL
+		    step3. [pycharm interface/folder line] right click any/git/repository/push/setting a new remote define (paste URL)→select a commit →push
     
     3.runserver
-	    python manage.py runserver
+	    [terminal]python manage.py runserver
     4.apps
-        4.1 admin-user
-        4.2 models
+        4.1 start app
+		    [terminal] python manage.py startapp appname
+			
+		4.2 register new app in settings
+		    [settings/INSTALLED_APPS] 'appname.apps.AppnameConfig', {ex.'accounts.apps.AccountsConfig',}
     
     5.database
+	    5.1 add new database in pgadmin
+		5.2 register database in settings
+            DATABASES = {
+                'default': {
+                    'ENGINE': 'django.db.backends.postgresql',
+                    'NAME': 'NewRCWeb',
+                    'USER': 'postgres',
+                    'PASSWORD': 'django1234',
+                    'HOST': 'localhost',
+                    'PORT': '5432',
+                }
+            }
+			
+		5.3 add a new model[app/models.py] 
+		    class test(models.Model):
+                unit = models.CharField(max_length=255)
+				
+		5.4 register model in admin[app/admin.py]
+		    from .models import test
+            # Register your models here.
+            admin.site.register(test)
+		
+   		5.5 make migrations[terminal]
+		    python manage.py makemigrations
+		5.6 migrate[terminal]
+		    python manage.py migrate
+		5.7 create super user for admin page[terminal]
+		    python manage.py createsuperuser
+			username:ryan
+		    password:m7GuKA39
     6.static and media
+	    ※media 是由database 那邊產生的
         6.1 [DefaultApps/settings.py]
             STATICFILES_DIRS=[
             os.path.join(BASE_DIR, 'producthunt/static/')
@@ -27,3 +68,75 @@
             MEDIA_URL = '/media/'
         6.2 [DefaultApps/urls.py]
             +static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+			
+二、urls.py
+    1.normal set path
+	    #以home.html為例
+	    from appname import views
+	    path('',views.home,name='home')
+    2.include other urls
+	    path('appname/', include('appname.urls')),
+	3.setting int
+	    #以int=product_id為例
+	    path('<int:product_id>/', views.detail, name='detail'),
+	
+三、views.py
+    1. normal return any html
+	    #以home.html為例(假設已在app目錄下新增templates folder/appname folder)
+	    def home(request):
+            return render(request, 'appname/home.html')
+	2. get int from urls
+	    #以int=product_id為例
+	    def detail(request, product_id):
+		    #function content
+			
+四、html
+    1.顯示時間
+	    {% now "jS F Y H:i" %}
+ 
+五、settings
+    1. database
+	2. static and media
+	3. install apps
+	4. template directory
+	5. language
+	    LANGUAGE_CODE = 'zh-Hant'
+	6. time zone
+        TIME_ZONE = 'Asia/Taipei'	    
+六、Folder map
+    [enviroment]
+	    [project-folder]
+		    [default apps]
+			    __init__
+				settings
+				urls
+			    [templates]
+				    base.html				
+			[added app]
+			    __init__
+			    admin
+				urls
+				views
+				models
+				apps
+				[templates]
+				    [added app]
+					    home.html
+				[migrations]
+			[static]
+			[media]
+		[venv]
+
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			

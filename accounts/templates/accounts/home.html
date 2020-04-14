@@ -1,0 +1,398 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<style>
+html, body, .container-fluid, .row {
+ height: 100%;
+
+ }
+body {font-family: Microsoft JhengHei;}
+div {
+  padding: 0;
+  margin: 0;
+  font-family: Microsoft JhengHei;
+}
+
+#sidebar {
+  min-width: 270px;
+  max-width: 270px;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+   height: 100%;
+   border-right: 1px solid rgb(250,250,250);
+   padding: 0px;
+   }
+  #sidebar.active {
+    min-width: 100px;
+    max-width: 100px;
+    text-align: center;
+     height: 100%;}
+  #sidebar.active ul.components li {
+      font-size: 12px; }
+  #sidebar.active ul.components li a {
+        padding: 10px 0; }
+  #sidebar.active ul.components li a span {
+          margin-right: 0;
+          display: block;
+          font-size: 24px; }
+    #sidebar.active .logo {
+      padding: 10px 0; }
+    #sidebar.active .footer {
+      display: none; }
+
+  #sidebar ul.components {
+
+    padding: 0px;
+    margin-left:10px;
+    -webkit-transition: 0.3s;
+    -o-transition: 0.3s;
+    transition: 0.3s; }
+
+
+    #sidebar ul li > ul {
+      margin-left: 10px; }
+      #sidebar ul li > ul li {
+        font-size: 14px; }
+    #sidebar ul li a {
+
+      display: block;
+      color: black;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1); }
+      #sidebar ul li a span {
+        margin-right: 15px; }
+        @media (max-width: 991.98px) {
+          #sidebar ul li a span {
+            display: block; } }
+
+
+
+
+
+
+/* Change background color of buttons on hover */
+.tab a:hover {
+  background-color: rgb(250,250,250);
+  text-decoration: none
+}
+
+/* Create an active/current tablink class */
+.tab a.active {
+  background-color: rgb(250,250,250);
+}
+
+/* Style the tab content */
+.tabcontent .input-tab{
+
+  margin: 0;
+  padding:0px;
+
+
+}
+.tabframe {
+  display: flex;
+  justify-content:center;
+  background-color: rgb(254,254,254);
+  margin: 0;
+  border: 1px solid rgb(250,250,250);
+  padding:0px;
+  height:92%;
+  overflow: auto;
+
+}
+
+
+.chinese-title{
+
+font-size: 10px;
+font-weight:900;
+}
+.english-title{
+font-weight:900;
+font-size: 12px;
+background: rgb(250,250,250);
+padding-left: 10px;
+padding-top: 5px;
+padding-bottom: 5px;
+}
+p{
+font-size: 14px;
+font-weight:450;
+}
+
+
+.tab-element{
+padding-right: 10px;
+padding-left: 10px;
+padding-bottom:10px;
+}
+.child-center {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+
+
+
+/* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+/* Style the tab */
+
+
+/* Style the buttons inside the tab */
+.inputButtonContainer a {
+  background-color: rgba(255,255,255,0.1);
+  float: left;
+  border:1px solid rgba(0, 0, 0, 0.1);
+  border-bottom:0px;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s;
+
+}
+
+
+/* Create an active/current tablink class */
+.inputButtonContainer a.active {
+  background-color:rgb(250,250,250);
+}
+
+
+.rcorners2 {
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  margin-right: 0;
+  display: block;
+  font-size: 12px;
+  color: black;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  min-width: 100px;
+  max-width: 100px;
+  height: 100%;
+
+
+}
+
+.input-tab{
+width:100%
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+<div class="row">
+    <div>
+        <nav id="sidebar" class="active col-1 ">
+
+            <ul class="components tab">
+
+                <li>
+                    <a id="parameter" href="#" class="tablinks"
+                       onclick="openTab(this.id, this.id + 'Tab','tabcontent','tablinks' );"><span
+                            class="fas fa-book"></span>Parameter</a>
+                </li>
+                <li>
+                    <a id="run" href="#" class="tablinks"
+                       onclick="openTab(this.id, this.id + 'Tab','tabcontent','tablinks' );"><span
+                            class="fas fa-play"></span>
+                        Run</a>
+                </li>
+                <li>
+                    <a id="clipping" href="#" class="tablinks"
+                       onclick="openTab(this.id, this.id + 'Tab','tabcontent','tablinks' );"><span
+                            class="fas fa-camera"></span>
+                        Clipping</a>
+                </li>
+                <li>
+                    <a href="#"><span class="fas fa-file"></span> New</a>
+                </li>
+                <li>
+                    <a href="#"><span class="fas fa-save"></span> Save</a>
+                </li>
+                <li>
+                    <a href="#"><span class="fas fa-file-import"></span> Import</a>
+                </li>
+            </ul>
+
+
+        </nav>
+    </div>
+
+
+    <div class="tabframe">
+        <div id="parameterTab" class="tabcontent">
+            <h3 class="english-title">Equivalent Stress Block<br/><span class="chinese-title">等值矩形應力塊</span></h3>
+            <img src="{% static 'StressBlock.svg' %}" class="d-inline-block alighn-top tab-element"
+                 style="width:500px"/>
+            <p style="padding-left: 200px;padding-top: 3px;padding-bottom: 3px;">&alpha;<sub>1</sub>&nbsp;=&nbsp;0.85
+            </p>
+
+            <p style="padding-left: 200px;padding-top: 3px;padding-bottom: 3px;">&beta;<sub>1</sub>&nbsp;=&nbsp;0.85</p>
+
+            <h3 class="english-title">Strength Reduction Factor<br/><span class="chinese-title">強度折減係數</span></h3>
+            <div style="width: 100%" class="child-center">
+                <img src="{% static 'StrengthReductionFactor.svg' %}" class="d-inline-block alighn-top tab-element"
+                     style="width:280px"/></div>
+            <p style="padding-left: 200px;padding-top: 3px;padding-bottom: 3px;">&phi;<sub>1</sub>&nbsp;=&nbsp;0.65</p>
+            <p style="padding-left: 200px;padding-top: 3px;padding-bottom: 3px;">&phi;<sub>2</sub>&nbsp;=&nbsp;0.9</p>
+            <p style="padding-left: 200px;padding-top: 3px;padding-bottom: 3px;">&epsilon;<sub>t1</sub>&nbsp;=&nbsp;0.002
+            </p>
+            <p style="padding-left: 200px;padding-top: 3px;padding-bottom: 3px;">&epsilon;<sub>t2</sub>&nbsp;=&nbsp;0.005
+            </p>
+
+        </div>
+
+        <div id="runTab" class="tabcontent">
+            <h3>Paris</h3>
+            <p>Paris is the capital of France.</p>
+        </div>
+
+        <div id="clippingTab" class="tabcontent">
+            <h3>Tokyo</h3>
+            <p>Tokyo is the capital of Japan.</p>
+        </div>
+    </div>
+    <div style="margin-left:15px;min-width:400px;">
+        <div class="row inputButtonContainer" style="height:20px">
+
+            <a id="inputForm" class="rcorners2 child-center english-title input-tab-button" style="padding:0px"
+               onclick="openTab(this.id, this.id + 'Tab','input-tab','input-tab-button');"><span class="child-center">Form</span></a>
+
+
+            <a id="inputText" class="rcorners2 child-center english-title input-tab-button" style="padding:0px"
+               onclick="openTab(this.id, this.id + 'Tab','input-tab','input-tab-button' );">
+                <span class="child-center">Text</span>
+            </a>
+
+
+        </div>
+        <div class="row">
+            <div class="col-md-12 tabframe" style="justify-content:left;background-color: rgb(255,255,255);">
+                <div id="inputFormTab" class="input-tab">
+                    <h3 class="english-title">Dimension of Section
+                        <br/><span class="chinese-title">斷面尺寸</span></h3>
+
+                    <form>
+                      {% csrf_token %}
+                        <label for="Dx"> <p>D<sub>x</sub>&nbsp;=&nbsp;</p></label><input type="text" id="Dx" name="Dx" >cm<br>
+                        <label for="Dy"> <p>D<sub>y</sub>&nbsp;=&nbsp;</p></label></label><input type="text" id="Dy" name="Dy" >cm
+
+
+                    <h3 class="english-title">Strength of Material
+                        <br/><span class="chinese-title">材料強度</span></h3>
+                    <h3 class="english-title">Reinforcement Coordinate
+                        <br/><span class="chinese-title">鋼筋座標</span></h3>
+                    <h3 class="english-title">Factored Loads
+                        <br/><span class="chinese-title">係數化載重</span></h3>
+                   <input type="submit" value="Run">
+                     </form>
+                </div>
+                <div id="inputTextTab" class="english-title input-tab">
+                    <p style="font-size: 12px; font-weight: bolder;">text</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+function close(targetTabClass, switchTabClass){
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName(targetTabClass);
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName(switchTabClass);
+  console.log(tablinks.length)
+  for (i = 0; i < tablinks.length; i++) {
+
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+}
+function openCity(evt, cityName) {
+  close()
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+function openTab(buttonId, tabId, targetTabClass, switchTabClass) {
+  close(targetTabClass, switchTabClass)
+  document.getElementById(tabId).style.display = "block";
+  document.getElementById(buttonId).className +=" active";
+
+}
+document.getElementById('parameter').click();
+document.getElementById('inputForm').click();
+document.body.style.overflow = 'hidden';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+{% endblock %}
