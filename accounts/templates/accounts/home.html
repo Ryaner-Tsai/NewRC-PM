@@ -6,11 +6,27 @@ html, body, .container-fluid, .row {
  height: 100%;
 
  }
-body {font-family: Microsoft JhengHei;}
+body {
+font-family: Microsoft JhengHei;
+overflow-x:hidden;
+}
 div {
   padding: 0;
   margin: 0;
   font-family: Microsoft JhengHei;
+}
+
+table, th, td {
+  text-align: center;
+  border-collapse: collapse;
+
+}
+div.load table tr th {
+width:25%;
+}
+
+#loadTableTitle tr th{
+width:25%;
 }
 
 #sidebar {
@@ -96,7 +112,7 @@ div {
   margin: 0;
   border: 1px solid rgb(250,250,250);
   padding:0px;
-  height:92%;
+  height:100%;
   overflow: auto;
 
 }
@@ -115,9 +131,13 @@ padding-left: 10px;
 padding-top: 5px;
 padding-bottom: 5px;
 }
-p{
-font-size: 14px;
+.english-content{
 font-weight:450;
+font-size: 13.5px;
+}
+.unit{
+font-weight:450;
+font-size: 12.5px;
 }
 
 
@@ -194,24 +214,82 @@ align-items: center;
 .input-tab{
 width:100%
 }
+.output-tab{
+width:100%
+}
+
+input, select {
+max-height: 21px;
+min-height: 21px;
+max-width: 130px;
+font-size: 13px;
+font-family: Microsoft JhengHei;
+font-weight: 450;
+}
+input:focus,select:focus, textarea:focus {
+outline:none;
+border:1px solid rgba(255,204,0,1);
+box-shadow:0 0 1.5px rgba(255,204,0,1);
+}
+input[type="text"]:disabled {
+  background: rgb(250,250,250);
+  outline:none;
+  border:1px solid rgba(169,169,169,1);
+}
+
+label{
+    margin-bottom: 5px;
+    font-size: 14px;
+}
 
 
+.child-center-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+button.btn {
+ outline:none;
+}
+.btn{
+    border: 1px solid rgb(200,200,200);
+    transition:0.15s;
+    font-family: Microsoft JhengHei;
+    max-height: 40px;
+    text-align: center;
+    padding: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 10px;
+    width: 70px;
+    outline:none;
+}
+.btn:hover{
+color:rgb(255,204,0);
+outline:none;
+border:1px solid rgba(255,204,0,1);
+box-shadow:0 0 1.5px rgba(255,204,0,1);
+}
+.btn:focus{
+outline:none;
+box-shadow:0 0 0px rgba(255,204,0,1);
+}
 
+#loadList::-webkit-scrollbar {
+    display: none;
+}
 
-
-
-
-
-
-
-
+.load{
+cursor: context-menu;
+}
 
 
 
 
 </style>
-<div class="row">
-    <div>
+<div class="row" style="height: calc(100% - (30px + 30px));">
+    <div style="height: 100%;">
         <nav id="sidebar" class="active col-1 ">
 
             <ul class="components tab">
@@ -222,17 +300,21 @@ width:100%
                             class="fas fa-book"></span>Parameter</a>
                 </li>
                 <li>
-                    <a id="run" href="#" class="tablinks"
-                       onclick="openTab(this.id, this.id + 'Tab','tabcontent','tablinks' );"><span
-                            class="fas fa-play"></span>
-                        Run</a>
+                    <a id="new" href="javascript:{document.getElementById('NewHome').submit()}" class="tablinks">
+                        <span class="fas fa-file"></span>
+                        New</a>
+                    <form id="NewHome" method="POST" name="NewHome" action="{% url 'home' %}">
+                    {% csrf_token %}
+                        <input type="hidden" />
+                    </form>
                 </li>
                 <li>
-                    <a id="clipping" href="#" class="tablinks"
+                    <a id="intro" href="#" class="tablinks"
                        onclick="openTab(this.id, this.id + 'Tab','tabcontent','tablinks' );"><span
-                            class="fas fa-camera"></span>
-                        Clipping</a>
+                            class="fas fa-question"></span>
+                        Intro</a>
                 </li>
+                <!--
                 <li>
                     <a href="#"><span class="fas fa-file"></span> New</a>
                 </li>
@@ -241,7 +323,7 @@ width:100%
                 </li>
                 <li>
                     <a href="#"><span class="fas fa-file-import"></span> Import</a>
-                </li>
+                </li>...-->
             </ul>
 
 
@@ -249,40 +331,60 @@ width:100%
     </div>
 
 
-    <div class="tabframe">
-        <div id="parameterTab" class="tabcontent">
+    <div class="tabframe" style="width:30%;min-width:400px;">
+        <div id="parameterTab" class="tabcontent" style="width:100%">
             <h3 class="english-title">Equivalent Stress Block<br/><span class="chinese-title">等值矩形應力塊</span></h3>
             <img src="{% static 'StressBlock.svg' %}" class="d-inline-block alighn-top tab-element"
-                 style="width:500px"/>
-            <p style="padding-left: 200px;padding-top: 3px;padding-bottom: 3px;">&alpha;<sub>1</sub>&nbsp;=&nbsp;0.85
+                 style="width:100%"/>
+            <p style="padding-top: 3px;padding-bottom: 3px;padding-left:10%" class="english-content">
+                &alpha;<sub>1</sub>&nbsp;=&nbsp;0.85-0.00022(f<sub>c</sub><sup>'</sup>&nbsp;-560),
+                &nbsp;0.7&le;&alpha;<sub>1</sub>&le;0.85, &nbsp; f<sub>c</sub><sup>'</sup>: kgf/cm<sup>2</sup>
+                <br>
+
+            </p>
+            <p style="padding-top: 3px;padding-bottom: 3px;padding-left:10%" class="english-content">
+              &nbsp;&nbsp;&nbsp;&nbsp;  =<span id="alphaValue"></span>
             </p>
 
-            <p style="padding-left: 200px;padding-top: 3px;padding-bottom: 3px;">&beta;<sub>1</sub>&nbsp;=&nbsp;0.85</p>
+            <p style="padding-top: 3px;padding-bottom: 3px;padding-left:10%" class="english-content">
+                &beta;<sub>1</sub>&nbsp;=&nbsp;0.85-0.00071(f<sub>c</sub><sup>'</sup>&nbsp;-280),
+                &nbsp;0.65&le;&beta;<sub>1</sub>&le;0.85, &nbsp; f<sub>c</sub><sup>'</sup>: kgf/cm<sup>2</sup>
+            </p>
+            <p style="padding-top: 3px;padding-bottom: 3px;padding-left:10%" class="english-content">
+              &nbsp;&nbsp;&nbsp;&nbsp;  =<span id="betaValue"></span>
+            </p>
+
 
             <h3 class="english-title">Strength Reduction Factor<br/><span class="chinese-title">強度折減係數</span></h3>
             <div style="width: 100%" class="child-center">
                 <img src="{% static 'StrengthReductionFactor.svg' %}" class="d-inline-block alighn-top tab-element"
                      style="width:280px"/></div>
-            <p style="padding-left: 200px;padding-top: 3px;padding-bottom: 3px;">&phi;<sub>1</sub>&nbsp;=&nbsp;0.65</p>
-            <p style="padding-left: 200px;padding-top: 3px;padding-bottom: 3px;">&phi;<sub>2</sub>&nbsp;=&nbsp;0.9</p>
-            <p style="padding-left: 200px;padding-top: 3px;padding-bottom: 3px;">&epsilon;<sub>t1</sub>&nbsp;=&nbsp;0.002
+            <p style="padding-top: 3px;padding-bottom: 3px;" class="child-center english-content">
+                &phi;<sub>1</sub>&nbsp;=&nbsp;0.65
             </p>
-            <p style="padding-left: 200px;padding-top: 3px;padding-bottom: 3px;">&epsilon;<sub>t2</sub>&nbsp;=&nbsp;0.005
+            <p style="padding-top: 3px;padding-bottom: 3px;" class="child-center english-content">
+                &phi;<sub>2</sub>&nbsp;=&nbsp;0.9
+            </p>
+            <p style="padding-top: 3px;padding-bottom: 3px;" class="child-center english-content">
+                &epsilon;<sub>t1</sub>&nbsp;=&nbsp; &epsilon;<sub>y</sub>&nbsp;=&nbsp;<span id="yieldStrainValue"></span>
+            </p>
+            <p style="padding-top: 3px;padding-bottom: 3px;" class="child-center english-content">
+                &epsilon;<sub>t2</sub>&nbsp;=&nbsp;0.005
             </p>
 
         </div>
 
-        <div id="runTab" class="tabcontent">
+        <div id="newTab" class="tabcontent">
             <h3>Paris</h3>
             <p>Paris is the capital of France.</p>
         </div>
 
-        <div id="clippingTab" class="tabcontent">
+        <div id="introTab" class="tabcontent">
             <h3>Tokyo</h3>
             <p>Tokyo is the capital of Japan.</p>
         </div>
     </div>
-    <div style="margin-left:15px;min-width:400px;">
+    <div style="margin-left:15px;min-width:25%;max-width:25%;height: 100%;">
         <div class="row inputButtonContainer" style="height:20px">
 
             <a id="inputForm" class="rcorners2 child-center english-title input-tab-button" style="padding:0px"
@@ -296,29 +398,159 @@ width:100%
 
 
         </div>
-        <div class="row">
+        <div class="row" style="height: calc(100% - (0px + 20px));">
             <div class="col-md-12 tabframe" style="justify-content:left;background-color: rgb(255,255,255);">
                 <div id="inputFormTab" class="input-tab">
-                    <h3 class="english-title">Dimension of Section
-                        <br/><span class="chinese-title">斷面尺寸</span></h3>
-
                     <form>
-                      {% csrf_token %}
-                        <label for="Dx"> <p>D<sub>x</sub>&nbsp;=&nbsp;</p></label><input type="text" id="Dx" name="Dx" >cm<br>
-                        <label for="Dy"> <p>D<sub>y</sub>&nbsp;=&nbsp;</p></label></label><input type="text" id="Dy" name="Dy" >cm
+                        <h3 class="english-title">Dimension of Section
+                            <br/><span class="chinese-title">斷面尺寸</span></h3>
 
 
-                    <h3 class="english-title">Strength of Material
-                        <br/><span class="chinese-title">材料強度</span></h3>
-                    <h3 class="english-title">Reinforcement Coordinate
-                        <br/><span class="chinese-title">鋼筋座標</span></h3>
-                    <h3 class="english-title">Factored Loads
-                        <br/><span class="chinese-title">係數化載重</span></h3>
-                   <input type="submit" value="Run">
-                     </form>
+                        {% csrf_token %}
+                        <div style="padding-left:30px;padding-bottom:10px;padding-top:10px">
+                            <label for="Dx"><p class="english-content">D<sub>x</sub>&nbsp;=&nbsp;</p></label><input
+                                type="text" id="Dx" name="Dx" class="inputData"><span class="unit">&nbsp;cm</span><br>
+                            <label for="Dy"><p class="english-content">D<sub>y</sub>&nbsp;=&nbsp;</p></label><input
+                                type="text" id="Dy" name="Dy" class="inputData"><span class="unit">&nbsp;cm</span>
+                        </div>
+
+                        <h3 class="english-title">Strength of Material
+                            <br/><span class="chinese-title">材料強度</span></h3>
+                        <div style="padding-left:30px;padding-bottom:10px;padding-top:10px">
+                            <label for="fc"><p class="english-content">f<sub>c</sub><sup>'</sup>&nbsp;=&nbsp;</p>
+                            </label><input
+                                type="text" id="fc" name="fc" class="inputData" onfocusout="alphaBetaCalculate()"><span
+                                class="unit">&nbsp;kgf/cm<sup>2</sup></span><br>
+                            <label for="fy"><p class="english-content">f<sub>y</sub><span
+                                    style="font-size:5px">&nbsp;</span>&nbsp;=&nbsp;</p></label><input
+                                type="text" id="fy" name="fy" class="inputData" onfocusout="yieldStrainCalculate()"><span
+                                class="unit">&nbsp;kgf/cm<sup>2</sup></span>
+                        </div>
+                        <h3 class="english-title">
+                            Arrangement of Reinforcement Bars
+                            <br/>
+                            <span class="chinese-title">鋼筋配置</span>
+                        </h3>
+                        <div style="padding-left:30px;padding-bottom:10px;padding-top:10px">
+                            <label for="nx"><p class="english-content">n<sub>x</sub>&nbsp;=&nbsp;</p></label>
+                            <input type="text" id="nx" name="nx" class="inputData">
+                            <br/>
+                            <label for="ny"><p class="english-content">n<sub>y</sub>&nbsp;=&nbsp;</p></label>
+                            <input type="text" id="ny" name="ny" class="inputData">
+                            <br/>
+                            <label for="barSizeNo"><p class="english-content">d<sub>b</sub>&nbsp;&nbsp;=</p></label>
+                            <select id="barSizeNo" name="barSizeNo" onchange="showDbAb();sectionDrawing();"
+                                    class="inputData">
+                                <option value="10,0.953,0.7133">D10</option>
+                                <option value="13,1.27,1.267">D13</option>
+                                <option value="16,1.59,1.986">D16</option>
+                                <option value="19,1.91,2.865">D19</option>
+                                <option value="22,2.22,3.871">D22</option>
+                                <option value="25,2.54,5.067">D25</option>
+                                <option value="29,2.87,6.469">D29</option>
+                                <option value="32,3.22,8.143">D32</option>
+                                <option value="36,3.58,10.07">D36</option>
+                                <option value="39,3.94,12.19">D39</option>
+                                <option value="43,4.3,14.52">D43</option>
+                                <option value="50,5.02,19.79">D50</option>
+                                <option value="57,5.73,25.79">D57</option>
+                            </select>
+                            <span id="DbAb" class="english-content"></span>
+                            <br>
+                            <label for="cc"><p class="english-content">c<sub>c</sub>&nbsp;=&nbsp;</p></label>
+                            <input type="text" id="cc" name="cc" class="inputData">
+                            <span class="unit">&nbsp;cm</span>
+
+
+                        </div>
+                        <h3 class="english-title">Factored Loads
+                            <br/><span class="chinese-title">係數化載重</span></h3>
+                        <div style="display:flex;flex-wrap:nowrap;">
+                            <div style="flex:1;"></div>
+                            <div style="flex:1;" class="child-center-column">
+                                <label for="Pu"><p class="english-content" style="margin:0px;">P<sub>u</sub></p></label>
+
+                                <input type="text" id="Pu" name="Pu" style="width:80px">
+                                <span class="unit">(&nbsp;tf&nbsp;)</span>
+                                <button type="button" class="btn  english-content" title="插入"
+                                        onclick="insertLoad();writingInputToText(event);">
+                                    Insert
+                                </button>
+
+                            </div>
+                            <div style="flex:.5;"></div>
+                            <div style="flex:1;" class="child-center-column">
+                                <label for="Mux"><p class="english-content" style="margin:0px;">M<sub>ux</sub>&nbsp;</p>
+                                </label>
+                                <input type="text" id="Mux" name="Mux" style="width:80px">
+                                <span class="unit">(&nbsp;tf-m&nbsp;)</span>
+                                <button type="button" class="btn  english-content" title="修改"
+                                        onclick="modifyLoad();writingInputToText(event);">
+                                    Modify
+                                </button>
+                            </div>
+                            <div style="flex:.5;"></div>
+                            <div style="flex:1;" class="child-center-column">
+                                <label for="Muy">
+                                    <p class="english-content" style="margin:0px;">
+                                        M<sub>uy</sub>
+                                    </p>
+                                </label>
+                                <input type="text" id="Muy" name="Muy" style="width:80px" disabled>
+                                <span class="unit">
+                                    (&nbsp;tf-m&nbsp;)
+                                </span>
+
+                                <button type="button" class="btn  english-content" title="刪除"
+                                        onclick="deleteLoad();writingInputToText(event);">
+                                    Delete
+                                </button>
+                            </div>
+                            <div style="flex:1;"></div>
+                        </div>
+                        <div style=" margin-top:10px" class="child-center-column">
+                            <table style="width:75%;" id="loadTableTitle">
+                                <tr>
+                                    <th><p class="english-content" style="margin:0px;">No.</p></th>
+                                    <th><p class="english-content" style="margin:0px;">P<sub>u</sub></p></th>
+                                    <th><p class="english-content" style="margin:0px;">M<sub>ux</sub></p></th>
+                                    <th><p class="english-content" style="margin:0px;">M<sub>uy</sub></p></th>
+                                </tr>
+                            </table>
+
+                            <div id="loadList" class="english-content"
+                                 style="width:75%;height:90px;overflow-y:auto;border-bottom:1px solid rgb(0,0,0);border-top: 1px solid rgb(0,0,0);">
+
+                                <div href="#" id="a" class="load" style="display:none;background:rgb(0, 120, 215);"
+                                     onclick=" changeColor(this.className,this.id,'rgb(255,255,255)','rgb(0,120,215)')">
+                                    I am not visible!
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+                        <button style="margin:3% 12.5% 3% 12.5%" class="english-content btn" onclick="document.getElementById('submit').click();"> Run </button>
+                    </form>
                 </div>
-                <div id="inputTextTab" class="english-title input-tab">
-                    <p style="font-size: 12px; font-weight: bolder;">text</p>
+                <div id="inputTextTab" class="english-title input-tab child-center"
+                     style="padding:0px;background:rgb(254,254,254);">
+                    <form id="textForm" style="height:60%" class="child-center-column" action='' method="POST">
+                        {% csrf_token %}
+                        <p style="margin:0px;padding:0px;margin-top:5%;margin-bottom:1%;width:80%;">The following data
+                            are automatically transferred from "Form" tab:</p>
+
+                        <textarea id="inputTextarea" name="inputTextarea" form="textForm" style="width:80%;height:100%"
+                                  value=""> </textarea>
+
+                        <div style="width:80%;margin-top:2%">
+                            <input type="submit" value="Run" id="submit" class="english-content btn" style="margin:2% 0% 2% 0%">
+                        </div>
+
+
+                    </form>
+
 
                 </div>
 
@@ -327,6 +559,53 @@ width:100%
         </div>
 
     </div>
+    <div style="margin-left:30px;height: 100%;max-width:calc(45% - (15px + 30px + 100px + 30px));min-width:calc(45% - (15px + 30px + 100px + 30px));">
+        <div class="row inputButtonContainer" style="height:20px">
+
+            <a id="section" class="rcorners2 child-center english-title output-tab-button" style="padding:0px"
+               onclick="openTab(this.id, this.id + 'Tab','output-tab','output-tab-button');">
+                <span class="child-center">Summary</span>
+            </a>
+
+
+            <a id="result" class="rcorners2 child-center english-title output-tab-button" style="padding:0px"
+               onclick="openTab(this.id, this.id + 'Tab','output-tab','output-tab-button' );">
+                <span class="child-center">Result</span>
+            </a>
+
+
+        </div>
+        <div class="row" style="height: calc(100% - (0px + 20px));">
+            <div class="col-md-12 tabframe" style="justify-content:left;background-color: rgb(255,255,255);">
+                <div id="sectionTab" class="output-tab ">
+                    <h3 class="english-title">Section Sketch
+                        <br/><span class="chinese-title">斷面圖</span></h3>
+                    <div class="child-center">
+                        <svg id="sectionSvg" viewBox="0 0 132 132"
+                             style="width:60%;border:1px solid rgb(100,100,100);"></svg>
+
+                    </div>
+                    <h3 class="english-title">P-M<sub>xx</sub> Interaction Diagram
+                        <br/><span class="chinese-title">P-M<sub>xx</sub>互制圖</span></h3>
+                    <div class="child-center-column" style="width:100%;padding:10%;">
+                        <canvas id="PMCanvas" style="display: block;border:1px solid rgb(200,200,200);padding:10px;"
+                                class="chartjs-render-monitor">
+                        </canvas>
+
+                    </div>
+
+
+                </div>
+                <div id="resultTab" class="english-title output-tab">
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
 <script>
@@ -355,42 +634,406 @@ function openTab(buttonId, tabId, targetTabClass, switchTabClass) {
   document.getElementById(buttonId).className +=" active";
 
 }
+
+function showDbAb() {
+  var x = document.getElementById("barSizeNo").value;
+  var array=x.split(",");
+  document.getElementById("DbAb").innerHTML ="&nbsp;A<sub>b</sub>="+array[2]+
+  "<span class='unit'>&nbsp;cm<sup>2</sup></span>";
+
+}
+
+function changeColor(className,id,currentColor,newColor) {
+  var x = document.getElementsByClassName(className);
+  for (i = 0; i < x.length; i++) {
+  x[i].style.backgroundColor = currentColor;
+}
+
+document.getElementById(id).style.backgroundColor =newColor ;
+}
+
+function insertAfter(referenceNode, newNode) {
+    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+}
+function loadOrder(){
+  var y = document.getElementsByClassName('load');
+  for (j = 0; j < y.length; j++){
+     y[j].id='load'+j;
+     y[j].setAttribute("onclick","changeColor(this.className,this.id,'rgb(255,255,255)','rgb(0,120,215)')");
+  }
+  var z=document.getElementsByClassName('loadNo');
+  for (k=0; k < z.length; k++){
+  z[k].innerHTML=k+1;
+  }
+
+}
+function insertLoad()
+{
+  var x = document.getElementsByClassName('load');
+
+  for (i = 0; i < x.length; i++)
+  {
+   if (x[i].style.backgroundColor=="rgb(0, 120, 215)")
+   {
+      var el = document.createElement("div");
+      el.className='load';
+      var loadNo=i+1;
+      var loadPu=document.getElementById('Pu').value;
+      var loadMux=document.getElementById('Mux').value;
+      var loadMuy=document.getElementById('Muy').value;
+      var str='<table style="width:100%"><tr><th><p  class="english-content loadNo" style="margin:0px;">'+loadNo+'</p></th><th><p class="english-content" style="margin:0px;">'+loadPu+'</p></th><th><p class="english-content" style="margin:0px;">'+loadMux+'</p></th><th><p class="english-content" style="margin:0px;">'+loadMuy+'</p></th></tr></table>';
+       el.innerHTML =str;
+       insertAfter(x[i],el);
+       break;
+
+
+    }
+  }
+  loadOrder();
+  document.getElementById('load'+loadNo).click();
+}
+function deleteLoad()
+{
+
+var x = document.getElementsByClassName('load');
+var len =x.length-1;
+ for (i = 1; i < x.length; i++)
+  {
+   if (x[i].style.backgroundColor=="rgb(0, 120, 215)")
+   {
+      x[i].parentNode.removeChild(x[i]);
+      loadOrder();
+      if (i==len){
+      var clickedLoad=i-1;}else{
+      var clickedLoad=i;
+      }
+
+      document.getElementById('load'+clickedLoad).click();
+      break;
+   }
+  }
+
+}
+function modifyLoad(){
+
+var x = document.getElementsByClassName('load');
+var len =x.length-1;
+ for (i = 1; i < x.length; i++)
+  {
+   if (x[i].style.backgroundColor=="rgb(0, 120, 215)")
+   {
+      var el = document.createElement("div");
+      el.className='load';
+      var loadNo=i;
+      var loadPu=document.getElementById('Pu').value;
+      var loadMux=document.getElementById('Mux').value;
+      var loadMuy=document.getElementById('Muy').value;
+      var str='<table style="width:100%"><tr><th><p  class="english-content loadNo" style="margin:0px;">'+loadNo+'</p></th><th><p class="english-content" style="margin:0px;">'+loadPu+'</p></th><th><p class="english-content" style="margin:0px;">'+loadMux+'</p></th><th><p class="english-content" style="margin:0px;">'+loadMuy+'</p></th></tr></table>';
+       el.innerHTML =str;
+       x[i].parentNode.removeChild(x[i]);
+       insertAfter(x[i-1],el);
+       break;
+   }
+  }
+  loadOrder();
+  document.getElementById('load'+loadNo).click();
+}
+
+function sectionDrawing(){
+//混凝土斷面繪製
+console.log('sectionDrawing');
+var Dx=document.getElementById('Dx');
+var Dy=document.getElementById('Dy');
+var svgElement=document.getElementById('sectionSvg');
+var k=1.1;
+var Vx=k*Math.max(Dx.value,Dy.value);
+var Vy=k*Math.max(Dx.value,Dy.value);
+var x0=(Vx/2-Dx.value/2);
+var y0=(Vy/2-Dy.value/2);
+svgElement.setAttribute("viewBox","0 0 " + Vx + " " + Vy);
+svgElement.innerHTML='<rect x='+x0+' y='+y0+' width='+Dx.value+' height='+Dy.value+' style="fill:rgb(200,200,200);stroke-width:0.2;stroke:rgb(50,50,50)" />';
+
+//鋼筋繪製
+var nxElement=document.getElementById('nx');
+var nyElement=document.getElementById('ny');
+var barSizeNoElement=document.getElementById('barSizeNo');
+var coverElement=document.getElementById('cc');
+var nx = parseInt(nxElement.value);
+var ny = parseInt(nyElement.value);
+var barInformation = barSizeNoElement.value.split(",");
+var db = parseFloat(barInformation[1]);
+var As = parseFloat(barInformation[2]);
+var cover = parseFloat(coverElement.value);
+if ( nxElement.value>=2 && nyElement.value>=2 && Dx.value>0 && Dy.value>0 && cover > 0) {
+    barCoord=barCoordinate(Dx.value,Dy.value,nx,ny,db,cover);
+    for (i=0;i<barCoord.x.length;i++){
+        var xv=barCoord.x[i]+Vx/2;
+        var yv=Vy/2-barCoord.y[i];
+        svgElement.innerHTML+= '<circle cx='+xv+' cy='+yv+' r='+db/2+' fill="black" />';
+    }
+}
+
+
+
+}
+
+function barCoordinate(Dx, Dy, nx, ny, db, cover) {
+  var nTotal = 2 * nx + (ny - 2) * 2;
+  var Sxt = Dx - 2 * cover - db;
+  var Syt = Dy - 2 * cover - db;
+  var Sx = Sxt / (nx - 1);
+  var Sy = Syt / (ny - 1);
+  var xBar = new Array();
+  var yBar = new Array();
+  xBar[0] = Sxt / 2;
+  yBar[0] = Syt / 2;
+  for (i = 1; i < nTotal; i++) {
+    xBar[i] = xBar[i - 1];
+    yBar[i] = yBar[i - 1];
+    if (i < nx) {
+      xBar[i] = xBar[i - 1] - Sx;
+    } else if (i >= nx && i < nx + ny - 1) {
+      yBar[i] = yBar[i - 1] - Sy;
+    } else if (i >= nx + ny - 1 && i < 2 * nx + ny - 2) {
+      xBar[i] = xBar[i - 1] + Sx;
+    } else {
+      yBar[i] = yBar[i - 1] + Sy;
+    }
+  }
+
+  return { "x":xBar, "y":yBar };
+}
+
+function writingInputToText (event)
+{
+  var textAreaElem = document.getElementById('inputTextarea');
+  var inputDataElem = document.getElementsByClassName('inputData');
+  var inputLoadElem= document.getElementsByClassName('load');
+  textAreaElem.value ="";
+  for (i=0;i<=3;i++)
+  {
+    if ( inputDataElem.value === "undefined" )
+    {
+
+    } else {
+        textAreaElem.value += inputDataElem[i].value + '\n';
+    };
+  }
+  var nxElement=document.getElementById('nx');
+  var nyElement=document.getElementById('ny');
+  var barSizeNoElement=document.getElementById('barSizeNo');
+  var coverElement=document.getElementById('cc');
+  var nx = parseInt(nxElement.value);
+  var ny = parseInt(nyElement.value);
+  var barInformation = barSizeNoElement.value.split(",");
+  var db = parseFloat(barInformation[1]);
+  var As = parseFloat(barInformation[2]);
+  var cover = parseFloat(coverElement.value);
+  var Dx=document.getElementById('Dx');
+  var Dy=document.getElementById('Dy');
+  if (nxElement.value>=2 && nyElement.value>=2 && Dx.value>0 && Dy.value>0 && cover > 0)
+  {
+    barCoord=barCoordinate(Dx.value,Dy.value,nx,ny,db,cover);
+    for (k=0;k<barCoord.x.length;k++)
+    {
+      barCoord.x[k] = Math.round(parseFloat(barCoord.x[k])*100)/100 ;
+      barCoord.y[k] = Math.round(parseFloat(barCoord.y[k])*100)/100 ;
+    }
+
+    textAreaElem.value += db + '\n';
+    textAreaElem.value += As + '\n';
+    textAreaElem.value +=  barCoord.x + '\n';
+    textAreaElem.value +=  barCoord.y + '\n';
+  }
+  for (j=1;j<inputLoadElem.length;j++)
+  {
+    var loadJ = inputLoadElem[j].getElementsByTagName("p");
+    for (k=0;k<loadJ.length;k++)
+    {
+      textAreaElem.value += loadJ[k].innerHTML+";";
+    }
+    textAreaElem.value += '\n';
+  }
+
+}
+
+function alphaBetaCalculate()
+{
+  var fc =parseFloat(document.getElementById('fc').value);
+  var alpha = 0.85-0.00022*(fc -560);
+  var beta = 0.85-0.00071*(fc -280);
+  if (alpha > 0.85){alpha =0.85};
+  if (alpha < 0.7){alpha =0.7};
+  if (beta > 0.85){beta =0.85};
+  if (beta < 0.65){beta =0.65};
+  document.getElementById('alphaValue').innerHTML =Math.round(alpha*1000)/1000;
+  document.getElementById('betaValue').innerHTML =Math.round(beta*1000)/1000;
+
+}
+
+
+function yieldStrainCalculate()
+{
+var fy =parseFloat(document.getElementById('fy').value);
+var yieldStrain = fy/(2.04 *Math.pow(10,6));
+document.getElementById('yieldStrainValue').innerHTML =Math.round(yieldStrain*100000)/100000;
+}
 document.getElementById('parameter').click();
 document.getElementById('inputForm').click();
-document.body.style.overflow = 'hidden';
+document.getElementById('section').click();
+var ele=document.getElementsByClassName('inputData');
+for (i=0;i<ele.length;i++){
+    ele[i].addEventListener('focusout',function(){
+        sectionDrawing();
+        writingInputToText(event);
+    }
+    );
+}
+
+var ele=document.getElementById('sectionSvg');
+var ele2=document.getElementById('sectionSvg');
+document.getElementById('sectionSvg').style.height=ele.clientWidth+"px";
+
+var ele=document.getElementById('PMCanvas');
+document.getElementById('PMCanvas').style.height=ele.clientWidth+"px";
+showDbAb();
+
+</script>
+<script>
+    Chart.defaults.global.legend.display = false;
+	var color = Chart.helpers.color;
+	var scatterChartData = {
+		datasets: [{
+		    data: [],
+			label: 'My First dataset',
+			xAxisID: 'x-axis-1',
+			yAxisID: 'y-axis-1',
+			borderColor: "rgb(0,0,0)",
+			borderWidth: 2,
+			backgroundColor: "rgb(0,0,0)",
+			fill: false,
+            tension: 1,
+            pointRadius: 0,
+            showLine: true
+		},{
+		    data: [],
+			label: 'My First dataset',
+			xAxisID: 'x-axis-1',
+			yAxisID: 'y-axis-1',
+			borderColor: "rgb(255,204,0)",
+			borderWidth: 2,
+			backgroundColor: "rgb(255,204,0)",
+			fill: false,
+            tension: 0,
+            pointRadius: 3,
+            pointHoverRadius:6,
+            pointHoverBackgroundColor:"rgb(255,204,0)",
+            pointHoverBorderColor:"rgb(255,204,0)",
+            pointHitRadius: 20,
+            showLine: false
+		}]
+	};
+	var MxxString = '';
+    var PString = '';
+    var MuxString = '';
+    var PuString = '';
+    {% for Mi in Mxx %}
+      MxxString +={{Mi}} +',';
+    {% endfor %}
+    {% for Pi in P %}
+      PString +={{Pi}} +',';
+    {% endfor %}
+    {% for Muxi in Mux %}
+      MuxString +={{Muxi}} +',';
+    {% endfor %}
+    {% for Pui in Pu %}
+      PuString +={{Pui}} +',';
+    {% endfor %}
+      var Mxx = MxxString.split(',').map(parseFloat);
+      var P = PString.split(',').map(parseFloat);
+      var Mux = MuxString.split(',').map(parseFloat);
+      var Pu = PuString.split(',').map(parseFloat);
+      Mxx.pop();
+      P.pop();
+      Mux.pop();
+      Pu.pop();
+
+	for (j=0;j<Mux.length;j++)
+	{
+	  scatterChartData.datasets[1].data[j]={x:Mux[j],y:Pu[j]};
+	}
+
+	for (i=0;i<Mxx.length;i++)
+	{
+	  scatterChartData.datasets[0].data[i]={x:-Mxx[i],y:P[i]};
+	}
+
+
+	window.onload = function() {
+		var ctx = document.getElementById('PMCanvas').getContext('2d');
+
+		window.myScatter = Chart.Scatter(ctx, {
+			data: scatterChartData,
+			options: {
+			    elements: {
+                          point: {radius : 0},
+
+                         },
+			    scaleShowLabels : false,
+                maintainAspectRatio: false,
+				responsive: true,
+				hoverMode: 'nearest',
+				intersect: true,
+				title: {
+					display: true,
+					fontColor:'black',
+					fontSize: 15,
+					text: 'P-M Interaction Diagram'
+				},
+				scales: {
+					xAxes: [{
+					    scaleLabel:{
+                                     display: true,
+                                     labelString: 'Mxx (tf-m)'
+                                   },
+						position: 'bottom',
+						display: true,
+						ticks: {suggestedMin: 0,beginAtZero: true, min:0,fontColor:'black'},
+
+						id: 'x-axis-1'
+					},{position: 'top',gridLines: {display: false} }],
+					yAxes: [{
+						scaleLabel:{
+                                     display: true,
+                                     labelString: 'P (tf)'
+
+                                   },
+						type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+						display: true,
+						ticks: { suggestedMin: 0,beginAtZero: true,fontColor:'black'},
+						position: 'left',
+						id: 'y-axis-1',
+
+
+					}],
+				}
+			}
+		});
+
+	};
 
 
 
+</script>
+<script>
+function jsonTest()
+{
+  console.log('ok');
 
+  console.log(P);
+  console.log(Mxx);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 
