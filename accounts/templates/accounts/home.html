@@ -287,6 +287,16 @@ cursor: context-menu;
 
 
 
+
+
+
+
+
+
+
+
+
+
 </style>
 <div class="row" style="height: calc(100% - (30px + 30px));">
     <div style="height: 100%;">
@@ -304,8 +314,8 @@ cursor: context-menu;
                         <span class="fas fa-file"></span>
                         New</a>
                     <form id="NewHome" method="POST" name="NewHome" action="{% url 'home' %}">
-                    {% csrf_token %}
-                        <input type="hidden" />
+                        {% csrf_token %}
+                        <input type="hidden"/>
                     </form>
                 </li>
                 <li>
@@ -331,7 +341,7 @@ cursor: context-menu;
     </div>
 
 
-    <div class="tabframe" style="width:30%;min-width:400px;">
+    <div class="tabframe" style="width:30%;">
         <div id="parameterTab" class="tabcontent" style="width:100%">
             <h3 class="english-title">Equivalent Stress Block<br/><span class="chinese-title">等值矩形應力塊</span></h3>
             <img src="{% static 'StressBlock.svg' %}" class="d-inline-block alighn-top tab-element"
@@ -343,7 +353,7 @@ cursor: context-menu;
 
             </p>
             <p style="padding-top: 3px;padding-bottom: 3px;padding-left:10%" class="english-content">
-              &nbsp;&nbsp;&nbsp;&nbsp;  =<span id="alphaValue"></span>
+                &nbsp;&nbsp;&nbsp;&nbsp; =<span id="alphaValue"></span>
             </p>
 
             <p style="padding-top: 3px;padding-bottom: 3px;padding-left:10%" class="english-content">
@@ -351,7 +361,7 @@ cursor: context-menu;
                 &nbsp;0.65&le;&beta;<sub>1</sub>&le;0.85, &nbsp; f<sub>c</sub><sup>'</sup>: kgf/cm<sup>2</sup>
             </p>
             <p style="padding-top: 3px;padding-bottom: 3px;padding-left:10%" class="english-content">
-              &nbsp;&nbsp;&nbsp;&nbsp;  =<span id="betaValue"></span>
+                &nbsp;&nbsp;&nbsp;&nbsp; =<span id="betaValue"></span>
             </p>
 
 
@@ -366,7 +376,8 @@ cursor: context-menu;
                 &phi;<sub>2</sub>&nbsp;=&nbsp;0.9
             </p>
             <p style="padding-top: 3px;padding-bottom: 3px;" class="child-center english-content">
-                &epsilon;<sub>t1</sub>&nbsp;=&nbsp; &epsilon;<sub>y</sub>&nbsp;=&nbsp;<span id="yieldStrainValue"></span>
+                &epsilon;<sub>t1</sub>&nbsp;=&nbsp; &epsilon;<sub>y</sub>&nbsp;=&nbsp;<span
+                    id="yieldStrainValue"></span>
             </p>
             <p style="padding-top: 3px;padding-bottom: 3px;" class="child-center english-content">
                 &epsilon;<sub>t2</sub>&nbsp;=&nbsp;0.005
@@ -380,8 +391,46 @@ cursor: context-menu;
         </div>
 
         <div id="introTab" class="tabcontent">
-            <h3>Tokyo</h3>
-            <p>Tokyo is the capital of Japan.</p>
+
+            <h3 class="english-title">NewRC-PM Introduction<br/>
+                <span class="chinese-title">NewRC-PM 之介紹</span>
+            </h3>
+            <div class="child-center-column" style="margin:3% 7% 3% 7%;">
+                <p style="margin-bottom:3%;text-align:justify;" class="english-content">
+                    高強度鋼筋混凝土(NewRC)結構目前已成功應用於日本高樓層建築，該結構改善傳統鋼筋混凝土(RC)結構對於建築樓層之限制(最高約為30層樓)，且同時具有成本低、耐久性高等優點。以日本工程經驗為例，相較於SRC結構，採用NewRC結構可降低約五分之一的工程造價與工期，此外，日本已成功採用NewRC建造59層樓之高樓建築物，如下圖所示，表示超高層建築物應用NewRC結
+                    構確有其可行性。
+                </p>
+                <p style="margin-bottom:3%;text-align:justify;" class="english-content">
+                    國家地震工程研究中心於2011年起籌組高強度鋼筋混凝土(New RC)研究團隊，採用降伏強度685MPa以及785 MPa之高強度鋼筋以及強度高於70MPa之高強度混凝土進行構件行為研究，當中包含柱、梁、版、梁柱接頭、牆等結構主要構材。經數年戮力研究後，於2017年出版「高強度鋼筋混凝土結構設計手冊」，詳細介紹NewRC結構之設計方法，當中也包含New RC柱構件受軸力與撓曲聯合作用之設計方法。
+                </p>
+                <p style="margin-bottom:3%;text-align:justify;" class="english-content">
+                    RC柱構件在軸力與撓曲聯合作用下，基於極限狀態之假設採以等效矩形應力分布計算斷面之軸力與撓曲強度，依此進行斷面設計。NewRC柱構件與之相同，惟該等值應力塊之應力值異於現行RC規範之規定，導致既有之分析軟體需進行額外設定或無法使用，局限了NewRC於柱構件方面的推廣。
+                </p>
+                <p style="margin-bottom:3%;text-align:justify;" class="english-content">
+                    因此台大歐昱辰教授指導研究生蔡東均開發NewRC-PM電腦應用程式，該程式由於內建等值應力塊之應力值計算公式，同時適用於RC以及NewRC柱構件之軸力與撓曲強度計算，便於NewRC柱構件之軸力與撓曲強度檢核。另外，程式在開發完成後，已上傳至歐昱辰教授個人網站(<a href="http://140.112.12.226/NewRC_PM.html" style="color:rgb(0,120,215);font-weight:900;">網站連結</a>)，供使用者至該網站免費下載。
+                </p>
+                <p style="margin-bottom:3%;text-align:justify;" class="english-content">
+                    雖既有NewRC-PM電腦應用程式已具備足夠之功能可檢核柱構件軸力與撓曲聯合作用之強度，然而該程式採用MATLAB開發，使其執行速度略低於一般電腦應用程式，且程式需進行下載、安裝等步驟才可順利使用，操作較為繁瑣。因此NewRC-PM開發者蔡東均進一步將NewRC-PM電腦應用程式轉譯為網頁應用程式，讓使用者略過前述步驟，直接開始使用NewRC-PM。
+                </p>
+                <p style="margin-bottom:3%;text-align:justify;" class="english-content">
+                    NewRC-PM網頁應用程式(本網頁)除了具備既有NewRC-PM電腦應用程式之功能外，另添加TEXT輸入方法，對於需要輸入大量斷面與設計載重的情況，使用者可先用外部軟體(如Excel)依照本網頁之格式產生多組斷面設計參數，並將各斷面設計參數貼於網頁中的TEXT分頁內執行，節省逐格輸入尺寸及配筋、設計載重之時間。本網頁也計畫在未來添加其他NewRC構件之設計功能，以進一步推廣NewRC結構。
+                </p>
+                <img src="{% static 'NewRCBuilding.jpg' %}" class="d-inline-block alighn-top tab-element"
+                     style="width:100%;padding:0px;"/>
+            </div>
+            <h3 class="english-title">NewRC-PM Developer Biography<br/>
+                <span class="chinese-title">NewRC-PM開發者簡介</span>
+            </h3>
+            <div style="margin:3% 7% 3% 7%;">
+
+                <p style="margin-bottom:3%;text-align:justify;" class="english-content">
+                    <img src="{% static 'CVPhoto.jpg' %}" class="d-inline-block alighn-top tab-element"
+                         style="width:30%;padding:0px;float:left;"/>
+                    開發者蔡東均，畢業於台灣科技大學營建工程系(學士)，畢業當年考取土木工程技師，並錄取台灣科技大學營建工程系-結構組(碩士)，指導教授為歐昱辰(現已轉任於台大土木系)，碩士期間開發NewRC-PM電腦應用程式，並在歐昱辰教授指導下，將該程式之檢核與研究應用彙整成期刊，發表於結構工程31卷-4期[<a href="{% static 'Journal1_NewRCPM.pdf' %}" style="color:rgb(0,120,215);font-weight:900;">PDF</a>]。碩士論文為「高強度鋼筋混凝土柱彎矩強度分析程式NewRC-PM之開發與研究應用」，旨在蒐集撓曲破壞之柱試驗資料，建立試驗資料庫，並利用NewRC-PM之分析功能比對分析結果與試驗結果，探討「鋼筋混凝土柱之最大可能彎矩強度」之計算方法。碩士畢業後，在歐教授指導下，進一步將前述計算方法精進，共同於結構工程期刊發表「鋼筋混凝土柱最大可能彎矩強度」(33卷-1期)[<a href="{% static 'Journal2_Mpr.pdf' %}" style="color:rgb(0,120,215);font-weight:900;">PDF</a>]。而後在服役期間(替代役)，參加當年結構工程技師考試並成功考取(年底考試，隔年放榜)，退役後進入中鼎工程股份有限公司任職結構設計工程師。開發者至今仍致力於土木相關程式與網頁的開發，在2020年，利用Django (Python)網頁應用框架，搭配Javascript, CSS, HTML等前端網頁設計，將NewRC-PM轉譯為網頁應用程式。
+                </p>
+
+
+            </div>
         </div>
     </div>
     <div style="margin-left:15px;min-width:25%;max-width:25%;height: 100%;">
@@ -423,7 +472,8 @@ cursor: context-menu;
                                 class="unit">&nbsp;kgf/cm<sup>2</sup></span><br>
                             <label for="fy"><p class="english-content">f<sub>y</sub><span
                                     style="font-size:5px">&nbsp;</span>&nbsp;=&nbsp;</p></label><input
-                                type="text" id="fy" name="fy" class="inputData" onfocusout="yieldStrainCalculate()"><span
+                                type="text" id="fy" name="fy" class="inputData"
+                                onfocusout="yieldStrainCalculate()"><span
                                 class="unit">&nbsp;kgf/cm<sup>2</sup></span>
                         </div>
                         <h3 class="english-title">
@@ -531,8 +581,12 @@ cursor: context-menu;
 
 
                         </div>
-                        <button style="margin:3% 12.5% 3% 12.5%" class="english-content btn" onclick="document.getElementById('submit').click();"> Run </button>
+
                     </form>
+                    <button style="margin:3% 12.5% 3% 12.5%" class="english-content btn"
+                            onclick="document.getElementById('submit').click();"> Run
+                    </button>
+
                 </div>
                 <div id="inputTextTab" class="english-title input-tab child-center"
                      style="padding:0px;background:rgb(254,254,254);">
@@ -545,7 +599,8 @@ cursor: context-menu;
                                   value=""> </textarea>
 
                         <div style="width:80%;margin-top:2%">
-                            <input type="submit" value="Run" id="submit" class="english-content btn" style="margin:2% 0% 2% 0%">
+                            <input type="submit" value="Run" id="submit" class="english-content btn"
+                                   style="margin:2% 0% 2% 0%">
                         </div>
 
 
@@ -562,27 +617,21 @@ cursor: context-menu;
     <div style="margin-left:30px;height: 100%;max-width:calc(45% - (15px + 30px + 100px + 30px));min-width:calc(45% - (15px + 30px + 100px + 30px));">
         <div class="row inputButtonContainer" style="height:20px">
 
-            <a id="section" class="rcorners2 child-center english-title output-tab-button" style="padding:0px"
-               onclick="openTab(this.id, this.id + 'Tab','output-tab','output-tab-button');">
-                <span class="child-center">Summary</span>
-            </a>
-
-
-            <a id="result" class="rcorners2 child-center english-title output-tab-button" style="padding:0px"
-               onclick="openTab(this.id, this.id + 'Tab','output-tab','output-tab-button' );">
-                <span class="child-center">Result</span>
+            <a id="section" class="rcorners2 child-center english-title output-tab-button active"
+               style="padding:0px;cursor:auto;">
+                <span class="child-center">Output</span>
             </a>
 
 
         </div>
         <div class="row" style="height: calc(100% - (0px + 20px));">
             <div class="col-md-12 tabframe" style="justify-content:left;background-color: rgb(255,255,255);">
-                <div id="sectionTab" class="output-tab ">
-                    <h3 class="english-title">Section Sketch
+                <div id="sectionTab" class="output-tab " style="min-width:550px;overflow-x:auto;">
+                    <h3 class="english-title" style="margin:0;">Section Sketch
                         <br/><span class="chinese-title">斷面圖</span></h3>
                     <div class="child-center">
                         <svg id="sectionSvg" viewBox="0 0 132 132"
-                             style="width:60%;border:1px solid rgb(100,100,100);"></svg>
+                             style="width:60%;border:1px solid rgb(100,100,100);margin:3%;"></svg>
 
                     </div>
                     <h3 class="english-title">P-M<sub>xx</sub> Interaction Diagram
@@ -596,9 +645,7 @@ cursor: context-menu;
 
 
                 </div>
-                <div id="resultTab" class="english-title output-tab">
 
-                </div>
 
             </div>
 
@@ -609,275 +656,7 @@ cursor: context-menu;
 </div>
 
 <script>
-function close(targetTabClass, switchTabClass){
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName(targetTabClass);
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName(switchTabClass);
-  console.log(tablinks.length)
-  for (i = 0; i < tablinks.length; i++) {
 
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-}
-function openCity(evt, cityName) {
-  close()
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
-}
-
-function openTab(buttonId, tabId, targetTabClass, switchTabClass) {
-  close(targetTabClass, switchTabClass)
-  document.getElementById(tabId).style.display = "block";
-  document.getElementById(buttonId).className +=" active";
-
-}
-
-function showDbAb() {
-  var x = document.getElementById("barSizeNo").value;
-  var array=x.split(",");
-  document.getElementById("DbAb").innerHTML ="&nbsp;A<sub>b</sub>="+array[2]+
-  "<span class='unit'>&nbsp;cm<sup>2</sup></span>";
-
-}
-
-function changeColor(className,id,currentColor,newColor) {
-  var x = document.getElementsByClassName(className);
-  for (i = 0; i < x.length; i++) {
-  x[i].style.backgroundColor = currentColor;
-}
-
-document.getElementById(id).style.backgroundColor =newColor ;
-}
-
-function insertAfter(referenceNode, newNode) {
-    referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-}
-function loadOrder(){
-  var y = document.getElementsByClassName('load');
-  for (j = 0; j < y.length; j++){
-     y[j].id='load'+j;
-     y[j].setAttribute("onclick","changeColor(this.className,this.id,'rgb(255,255,255)','rgb(0,120,215)')");
-  }
-  var z=document.getElementsByClassName('loadNo');
-  for (k=0; k < z.length; k++){
-  z[k].innerHTML=k+1;
-  }
-
-}
-function insertLoad()
-{
-  var x = document.getElementsByClassName('load');
-
-  for (i = 0; i < x.length; i++)
-  {
-   if (x[i].style.backgroundColor=="rgb(0, 120, 215)")
-   {
-      var el = document.createElement("div");
-      el.className='load';
-      var loadNo=i+1;
-      var loadPu=document.getElementById('Pu').value;
-      var loadMux=document.getElementById('Mux').value;
-      var loadMuy=document.getElementById('Muy').value;
-      var str='<table style="width:100%"><tr><th><p  class="english-content loadNo" style="margin:0px;">'+loadNo+'</p></th><th><p class="english-content" style="margin:0px;">'+loadPu+'</p></th><th><p class="english-content" style="margin:0px;">'+loadMux+'</p></th><th><p class="english-content" style="margin:0px;">'+loadMuy+'</p></th></tr></table>';
-       el.innerHTML =str;
-       insertAfter(x[i],el);
-       break;
-
-
-    }
-  }
-  loadOrder();
-  document.getElementById('load'+loadNo).click();
-}
-function deleteLoad()
-{
-
-var x = document.getElementsByClassName('load');
-var len =x.length-1;
- for (i = 1; i < x.length; i++)
-  {
-   if (x[i].style.backgroundColor=="rgb(0, 120, 215)")
-   {
-      x[i].parentNode.removeChild(x[i]);
-      loadOrder();
-      if (i==len){
-      var clickedLoad=i-1;}else{
-      var clickedLoad=i;
-      }
-
-      document.getElementById('load'+clickedLoad).click();
-      break;
-   }
-  }
-
-}
-function modifyLoad(){
-
-var x = document.getElementsByClassName('load');
-var len =x.length-1;
- for (i = 1; i < x.length; i++)
-  {
-   if (x[i].style.backgroundColor=="rgb(0, 120, 215)")
-   {
-      var el = document.createElement("div");
-      el.className='load';
-      var loadNo=i;
-      var loadPu=document.getElementById('Pu').value;
-      var loadMux=document.getElementById('Mux').value;
-      var loadMuy=document.getElementById('Muy').value;
-      var str='<table style="width:100%"><tr><th><p  class="english-content loadNo" style="margin:0px;">'+loadNo+'</p></th><th><p class="english-content" style="margin:0px;">'+loadPu+'</p></th><th><p class="english-content" style="margin:0px;">'+loadMux+'</p></th><th><p class="english-content" style="margin:0px;">'+loadMuy+'</p></th></tr></table>';
-       el.innerHTML =str;
-       x[i].parentNode.removeChild(x[i]);
-       insertAfter(x[i-1],el);
-       break;
-   }
-  }
-  loadOrder();
-  document.getElementById('load'+loadNo).click();
-}
-
-function sectionDrawing(){
-//混凝土斷面繪製
-console.log('sectionDrawing');
-var Dx=document.getElementById('Dx');
-var Dy=document.getElementById('Dy');
-var svgElement=document.getElementById('sectionSvg');
-var k=1.1;
-var Vx=k*Math.max(Dx.value,Dy.value);
-var Vy=k*Math.max(Dx.value,Dy.value);
-var x0=(Vx/2-Dx.value/2);
-var y0=(Vy/2-Dy.value/2);
-svgElement.setAttribute("viewBox","0 0 " + Vx + " " + Vy);
-svgElement.innerHTML='<rect x='+x0+' y='+y0+' width='+Dx.value+' height='+Dy.value+' style="fill:rgb(200,200,200);stroke-width:0.2;stroke:rgb(50,50,50)" />';
-
-//鋼筋繪製
-var nxElement=document.getElementById('nx');
-var nyElement=document.getElementById('ny');
-var barSizeNoElement=document.getElementById('barSizeNo');
-var coverElement=document.getElementById('cc');
-var nx = parseInt(nxElement.value);
-var ny = parseInt(nyElement.value);
-var barInformation = barSizeNoElement.value.split(",");
-var db = parseFloat(barInformation[1]);
-var As = parseFloat(barInformation[2]);
-var cover = parseFloat(coverElement.value);
-if ( nxElement.value>=2 && nyElement.value>=2 && Dx.value>0 && Dy.value>0 && cover > 0) {
-    barCoord=barCoordinate(Dx.value,Dy.value,nx,ny,db,cover);
-    for (i=0;i<barCoord.x.length;i++){
-        var xv=barCoord.x[i]+Vx/2;
-        var yv=Vy/2-barCoord.y[i];
-        svgElement.innerHTML+= '<circle cx='+xv+' cy='+yv+' r='+db/2+' fill="black" />';
-    }
-}
-
-
-
-}
-
-function barCoordinate(Dx, Dy, nx, ny, db, cover) {
-  var nTotal = 2 * nx + (ny - 2) * 2;
-  var Sxt = Dx - 2 * cover - db;
-  var Syt = Dy - 2 * cover - db;
-  var Sx = Sxt / (nx - 1);
-  var Sy = Syt / (ny - 1);
-  var xBar = new Array();
-  var yBar = new Array();
-  xBar[0] = Sxt / 2;
-  yBar[0] = Syt / 2;
-  for (i = 1; i < nTotal; i++) {
-    xBar[i] = xBar[i - 1];
-    yBar[i] = yBar[i - 1];
-    if (i < nx) {
-      xBar[i] = xBar[i - 1] - Sx;
-    } else if (i >= nx && i < nx + ny - 1) {
-      yBar[i] = yBar[i - 1] - Sy;
-    } else if (i >= nx + ny - 1 && i < 2 * nx + ny - 2) {
-      xBar[i] = xBar[i - 1] + Sx;
-    } else {
-      yBar[i] = yBar[i - 1] + Sy;
-    }
-  }
-
-  return { "x":xBar, "y":yBar };
-}
-
-function writingInputToText (event)
-{
-  var textAreaElem = document.getElementById('inputTextarea');
-  var inputDataElem = document.getElementsByClassName('inputData');
-  var inputLoadElem= document.getElementsByClassName('load');
-  textAreaElem.value ="";
-  for (i=0;i<=3;i++)
-  {
-    if ( inputDataElem.value === "undefined" )
-    {
-
-    } else {
-        textAreaElem.value += inputDataElem[i].value + '\n';
-    };
-  }
-  var nxElement=document.getElementById('nx');
-  var nyElement=document.getElementById('ny');
-  var barSizeNoElement=document.getElementById('barSizeNo');
-  var coverElement=document.getElementById('cc');
-  var nx = parseInt(nxElement.value);
-  var ny = parseInt(nyElement.value);
-  var barInformation = barSizeNoElement.value.split(",");
-  var db = parseFloat(barInformation[1]);
-  var As = parseFloat(barInformation[2]);
-  var cover = parseFloat(coverElement.value);
-  var Dx=document.getElementById('Dx');
-  var Dy=document.getElementById('Dy');
-  if (nxElement.value>=2 && nyElement.value>=2 && Dx.value>0 && Dy.value>0 && cover > 0)
-  {
-    barCoord=barCoordinate(Dx.value,Dy.value,nx,ny,db,cover);
-    for (k=0;k<barCoord.x.length;k++)
-    {
-      barCoord.x[k] = Math.round(parseFloat(barCoord.x[k])*100)/100 ;
-      barCoord.y[k] = Math.round(parseFloat(barCoord.y[k])*100)/100 ;
-    }
-
-    textAreaElem.value += db + '\n';
-    textAreaElem.value += As + '\n';
-    textAreaElem.value +=  barCoord.x + '\n';
-    textAreaElem.value +=  barCoord.y + '\n';
-  }
-  for (j=1;j<inputLoadElem.length;j++)
-  {
-    var loadJ = inputLoadElem[j].getElementsByTagName("p");
-    for (k=0;k<loadJ.length;k++)
-    {
-      textAreaElem.value += loadJ[k].innerHTML+";";
-    }
-    textAreaElem.value += '\n';
-  }
-
-}
-
-function alphaBetaCalculate()
-{
-  var fc =parseFloat(document.getElementById('fc').value);
-  var alpha = 0.85-0.00022*(fc -560);
-  var beta = 0.85-0.00071*(fc -280);
-  if (alpha > 0.85){alpha =0.85};
-  if (alpha < 0.7){alpha =0.7};
-  if (beta > 0.85){beta =0.85};
-  if (beta < 0.65){beta =0.65};
-  document.getElementById('alphaValue').innerHTML =Math.round(alpha*1000)/1000;
-  document.getElementById('betaValue').innerHTML =Math.round(beta*1000)/1000;
-
-}
-
-
-function yieldStrainCalculate()
-{
-var fy =parseFloat(document.getElementById('fy').value);
-var yieldStrain = fy/(2.04 *Math.pow(10,6));
-document.getElementById('yieldStrainValue').innerHTML =Math.round(yieldStrain*100000)/100000;
-}
 document.getElementById('parameter').click();
 document.getElementById('inputForm').click();
 document.getElementById('section').click();
@@ -890,6 +669,8 @@ for (i=0;i<ele.length;i++){
     );
 }
 
+
+
 var ele=document.getElementById('sectionSvg');
 var ele2=document.getElementById('sectionSvg');
 document.getElementById('sectionSvg').style.height=ele.clientWidth+"px";
@@ -897,6 +678,16 @@ document.getElementById('sectionSvg').style.height=ele.clientWidth+"px";
 var ele=document.getElementById('PMCanvas');
 document.getElementById('PMCanvas').style.height=ele.clientWidth+"px";
 showDbAb();
+
+
+
+
+
+
+
+
+
+
 
 </script>
 <script>
@@ -1024,6 +815,16 @@ showDbAb();
 
 
 
+
+
+
+
+
+
+
+
+
+
 </script>
 <script>
 function jsonTest()
@@ -1034,6 +835,16 @@ function jsonTest()
   console.log(Mxx);
 
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

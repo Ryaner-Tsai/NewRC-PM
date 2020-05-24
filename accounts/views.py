@@ -57,3 +57,39 @@ def home(request):
         return render(request, 'accounts/home.html', {'Mxx': StackedMxx/1000/100, 'P': StackedCombineCompressionForce/1000, 'Pu': Pu, 'Mux': Mux})
     else:
         return render(request, 'accounts/home.html')
+
+
+def signup(request):
+    if request.method == 'POST':
+       if request.POST['password1']==request.POST['password2']:
+           try:
+               user =User.objects.get(username=request.POST['username'])
+               return render(request, 'accounts/signup.html', {'error': 'User name has already been taken'})
+           except User.DoesNotExist:
+               user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
+               auth.login(request, user)
+               return redirect('home')
+       else:
+           return render(request, 'accounts/signup.html', {'error': 'Password must match'})
+
+    else:
+        return render(request, 'accounts/signup.html')
+
+def login(request):
+    #1.判斷是否為POST
+    if request.method == 'POST':
+        user = auth.authenticate(username=request.POST['username'], password=request.POST['password'])
+        if user is not None:
+            auth.login(request, user)
+            return redirect('home')
+        else:
+            return render(request, 'accounts/login.html', {'error':'username or password is incorrect.'})
+
+    else:
+        return render(request, 'accounts/login.html')
+    # 1.2 不是，則render accounts/login
+
+def logout(request):
+    if request.method == 'POST':
+        auth.logout(request)
+        return redirect('home')

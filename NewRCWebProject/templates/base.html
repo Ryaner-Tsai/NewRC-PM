@@ -16,6 +16,7 @@
     <link href="{% static 'openicon/font/css/open-iconic-bootstrap.css' %}" rel="stylesheet">
     <link href="{% static 'fontawesome/css/all.css' %}" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+   <script type="text/javascript" src="{% static '/JsCode.js' %}"></script>
 
 
 
@@ -56,9 +57,20 @@
         </button>
         <i class="icofont-plus-circle"></i>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav ml-auto">
+            <div class="navbar-nav ml-auto" >
+                    {% if user.is_authenticated %}
+                    <a class="nav-item nav-link " href="javascript:{document.getElementById('logout').submit()}" style="font-size:15px;">Log Out<span
+                            class="sr-only">(current)</span></a>
+                    <form id="logout" method="POST" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <input type="hidden" />
+                    </form>
 
-
+                    {% else %}
+                    <a class="nav-item nav-link " href="{% url 'signup' %}" style="font-size:15px;">Sign Up<span
+                            class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link " href="{% url 'login' %}" style="font-size:15px;">Log In</a>
+                    {% endif %}
             </div>
         </div>
 
