@@ -656,7 +656,7 @@ cursor: context-menu;
 </div>
 
 <script>
-
+console.log('script at home');
 document.getElementById('parameter').click();
 document.getElementById('inputForm').click();
 document.getElementById('section').click();
@@ -668,29 +668,18 @@ for (i=0;i<ele.length;i++){
     }
     );
 }
-
-
-
 var ele=document.getElementById('sectionSvg');
 var ele2=document.getElementById('sectionSvg');
 document.getElementById('sectionSvg').style.height=ele.clientWidth+"px";
-
 var ele=document.getElementById('PMCanvas');
 document.getElementById('PMCanvas').style.height=ele.clientWidth+"px";
 showDbAb();
-
-
-
-
-
-
-
-
-
-
-
 </script>
+
 <script>
+PMxxDrawing();
+function PMxxDrawing()
+{
     Chart.defaults.global.legend.display = false;
 	var color = Chart.helpers.color;
 	var scatterChartData = {
@@ -813,40 +802,6 @@ showDbAb();
 
 	};
 
-
-
-
-
-
-
-
-
-
-
-
-
-</script>
-<script>
-function jsonTest()
-{
-  console.log('ok');
-
-  console.log(P);
-  console.log(Mxx);
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
 {% endblock %}

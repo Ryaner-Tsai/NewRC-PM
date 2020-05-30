@@ -135,6 +135,18 @@ class reinforcements(forced_object):
         # Angle must be degree not rad
         return coordinate(self.X, self.Y).rotate(self.Angle)
 
+    @property
+    def PhiC(self):
+        return 0.65 if self.TransType == 'Tie' else 0.75
+
+    @property
+    def PhiT(self):
+        return 0.9
+
+    @property
+    def PhiPureC(self):
+        return 0.8 if self.TransType == 'Tie' else 0.85
+
     @staticmethod
     def phi(StrainT, Strain1, Strain2, Phi1, Phi2):
 
@@ -172,8 +184,8 @@ class reinforcements(forced_object):
                                  CompressionZoneStrain if CompressionZoneStrain.shape == () else CompressionZoneStrain[
                                      0],
                                  self.TensionZoneStrain,
-                                 0.65 if self.TransType == 'Tie' else 0.75,
-                                 0.9)
+                                 self.PhiC,
+                                 self.PhiT)
             yield
 
     @property
@@ -277,7 +289,8 @@ class concrete(forced_object):
 
 class strain_attr():
 
-    def __init__(self, H, TopStrain, TopY, NaDeepRatios=np.hstack([0, np.arange(0.01, 1, 0.01), np.arange(1, 2, 0.1), np.arange(2, 10, 0.2), float('inf')])):
+    def __init__(self, H, TopStrain, TopY, NaDeepRatios=np.hstack(
+        [0, np.arange(0.01, 1, 0.01), np.arange(1, 2, 0.1), np.arange(2, 10, 0.2), float('inf')])):
         self.NaDeepRatios = NaDeepRatios
         self.H = H
         self.TopStrain = TopStrain
@@ -297,10 +310,12 @@ class strain_attr():
 
 
 class force_system:
-    def __init__(self, Coordinate, CompressionForce, TakeMomentPoint=coordinate(ar([0]), ar([0]))):
+    def __init__(self, Coordinate, CompressionForce, MaxCombinedCompressionForce,
+                 TakeMomentPoint=coordinate(ar([0]), ar([0]))):
         self.Coordinate = Coordinate
         self.CompressionForce = CompressionForce
         self.TakeMomentPoint = TakeMomentPoint
+        self.MaxCombinedCompressionForce = MaxCombinedCompressionForce
 
     @property
     def Mxx(self):
@@ -312,7 +327,7 @@ class force_system:
 
     @property
     def CombineCompressionForce(self):
-        return np.sum(self.CompressionForce)
+        return min(np.sum(self.CompressionForce), self.MaxCombinedCompressionForce)
 
 
 class section:
@@ -325,6 +340,16 @@ class section:
         return strain_attr(np.max(self.Concrete.Rectangle.Y) - np.min(self.Concrete.Rectangle.Y),
                            self.Concrete.CompStrainLim
                            , np.max(self.Concrete.Rectangle.Y))
+
+    @property
+    def PnMax(self):
+        FsAtCompStrainLim = np.full(self.Reinforcements.Fy.shape, self.Concrete.CompStrainLim * self.Reinforcements.E)
+        Fs = np.min(ar([self.Reinforcements.Fy, FsAtCompStrainLim]), axis=0)
+        Ps = np.sum(self.Reinforcements.As * Fs)
+        Pc = self.Concrete.Abbr * self.Concrete.fc * (
+                    (self.Concrete.B) * (self.Concrete.H) - np.sum(self.Reinforcements.As))
+        PnMax = (Pc + Ps) * self.Reinforcements.PhiPureC
+        return PnMax
 
     def strained(self):
         GenReinforcements = self.Reinforcements.strained(self.StrainAttr.NaDeeps, self.StrainAttr.AttrTypes,
@@ -347,4 +372,4 @@ class section:
         XRotated = np.hstack([ar(self.Concrete.StressPolygon.Centroid[0]), self.Reinforcements.Coordinate.X])
         YRotated = np.hstack([ar(self.Concrete.StressPolygon.Centroid[1]), self.Reinforcements.Coordinate.Y])
         Compression = np.hstack([ar(self.Concrete.CompressionForce), self.Reinforcements.CompressionForce])
-        return force_system(coordinate(XRotated, YRotated).rotate(-self.Concrete.Angle), Compression)
+        return force_system(coordinate(XRotated, YRotated).rotate(-self.Concrete.Angle), Compression, self.PnMax)

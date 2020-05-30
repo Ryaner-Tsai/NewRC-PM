@@ -1,3 +1,4 @@
+console.log('script at outside');
 function close(targetTabClass, switchTabClass){
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName(targetTabClass);
@@ -267,6 +268,17 @@ var fy =parseFloat(document.getElementById('fy').value);
 var yieldStrain = fy/(2.04 *Math.pow(10,6));
 document.getElementById('yieldStrainValue').innerHTML =Math.round(yieldStrain*100000)/100000;
 }
+
+
+
+
+
+
+
+
+
+
+
 
 
 
